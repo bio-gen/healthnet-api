@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
 
-  describe 'GET /users' do
+  describe 'GET /v1/users' do
     it 'returns all users' do
       FactoryGirl.create(:user, email: 'john@test.com')
       FactoryGirl.create(:user, email: 'mike@test.com')
 
-      get '/users', headers: { 'Accept': 'application/vnd' }
+      get '/v1/users', headers: { 'Accept': 'application/vnd' }
 
       expect(response).to have_http_status 200
 
@@ -19,11 +19,11 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /users/:id' do
+  describe 'GET /v1/users/:id' do
     it 'returns the requested user' do
       FactoryGirl.create(:user, email: 'james@text.com', id: 1)
 
-      get '/users/1', headers: { 'Accept': 'application/vnd' }
+      get '/v1/users/1', headers: { 'Accept': 'application/vnd' }
 
       expect(response).to have_http_status 200
 
@@ -34,7 +34,7 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'POST /users' do
+  describe 'POST /v1/users' do
     it 'creates and returns the new user' do
       new_user = {
         data: {
@@ -47,7 +47,7 @@ RSpec.describe 'Users', type: :request do
         }
       }
 
-      post '/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      post '/v1/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
 
       expect(response).to have_http_status 201
 
@@ -71,7 +71,7 @@ RSpec.describe 'Users', type: :request do
         }
       }
 
-      put '/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      put '/v1/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
 
       expect(response).to have_http_status 200
 
@@ -86,7 +86,7 @@ RSpec.describe 'Users', type: :request do
     it 'deleted the requested user' do
       FactoryGirl.create(:user, id: 1)
 
-      delete '/users/1', headers: { 'Accept': 'application/vnd' }
+      delete '/v1/users/1', headers: { 'Accept': 'application/vnd' }
 
       expect(response).to have_http_status 204
     end
