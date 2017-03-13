@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :request do
 
   describe 'GET /users/:id' do
     it 'returns the requested user' do
-      FactoryGirl.create(:user, email: 'james@text.com')
+      FactoryGirl.create(:user, email: 'james@text.com', id: 1)
 
       get '/users/1', headers: { 'Accept': 'application/vnd' }
 
