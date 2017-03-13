@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'api/v1/users/registrations' }
 
   namespace :api, constraints: { subdomain: 'api' }, path: '/' do
     scope module: :v1 do
