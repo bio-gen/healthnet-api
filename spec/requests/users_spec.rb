@@ -37,8 +37,6 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /users' do
-    pending "Need fix for ActionController::UnknownFormat"
-
     it 'creates and returns the new user' do
       new_user = {
         data: {
