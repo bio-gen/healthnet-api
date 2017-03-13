@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
 
-  before { host! 'api.lvh.me:8080' }
-
   describe 'GET /users' do
     it 'returns all users' do
       FactoryGirl.create(:user, email: 'john@test.com')

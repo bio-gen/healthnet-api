@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Authentications', type: :request do
-
-  before { host! 'api.lvh.me:8080' }
-
-  describe 'POST /auth_user' do
+  describe 'POST /api/v1/auth_user' do
     let(:user) { FactoryGirl.create(:user, email: 'test@test.com') }
 
     it 'returns a valid JWT auth token' do
