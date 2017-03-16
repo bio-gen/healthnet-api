@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   scope module: 'api' do
     namespace :v1 do
-      post 'auth_user', to: 'authentication#authenticate_user'
+      post 'auth', to: 'authentication#authenticate_user'
 
       resources :users, except: [:new, :edit]
     end
