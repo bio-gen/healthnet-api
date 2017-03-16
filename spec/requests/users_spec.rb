@@ -58,7 +58,7 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'PUT/PATCH /users/:id' do
+  describe 'PUT/PATCH /v1/users/:id' do
     it 'updates the requested user' do
       FactoryGirl.create(:user, id: 1)
 
@@ -82,7 +82,7 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'DELETE /users/:id' do
+  describe 'DELETE /v1/users/:id' do
     it 'deleted the requested user' do
       FactoryGirl.create(:user, id: 1)
 
