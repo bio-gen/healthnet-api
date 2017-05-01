@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   scope module: 'api' do
     namespace :v1 do
-      post 'auth', to: 'authentication#authenticate_user'
-
       resources :users, except: [:new, :edit]
+
+      mount Knock::Engine => "/knock"
     end
   end
 end
