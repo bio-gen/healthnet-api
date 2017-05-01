@@ -12,6 +12,7 @@ gem 'puma', '~> 3.0'
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'devise'
 gem 'bcrypt'
+gem 'knock'
 gem 'jwt'
 gem 'rack-cors'
 
