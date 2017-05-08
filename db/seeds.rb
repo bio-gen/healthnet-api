@@ -3,7 +3,8 @@ user = User.create(
   email: 'test@test.com',
   password: '12345678',
   password_confirmation: '12345678',
-  full_name: 'Doctor Mengueche'
+  first_name: 'John',
+  last_name: 'Salchichon'
   )
 
 user.work_experiences.create(

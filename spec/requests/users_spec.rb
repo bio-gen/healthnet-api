@@ -42,7 +42,9 @@ RSpec.describe 'Users', type: :request do
           attributes: {
             email: 'mike@test.com',
             password: '12345678',
-            password_confirmation: '12345678'
+            password_confirmation: '12345678',
+            first_name: 'Doctor',
+            last_name: 'Mengueche'
           }
         }
       }
