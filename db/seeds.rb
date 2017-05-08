@@ -10,7 +10,7 @@ user.work_experiences.create(
   title: 'Software Engineer',
   company: 'Google',
   location: 'USA',
-  start_date: Date.new,
+  start_date: Date.today.to_s,
   current: true,
   description: 'Lalalala'
 )
