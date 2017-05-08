@@ -52,9 +52,10 @@ RSpec.describe 'Users', type: :request do
       expect(response).to have_http_status 201
 
       body = JSON.parse(response.body)
-      user_email = body['data']['attributes']['email']
 
+      user_email = body['data']['attributes']['email']
       expect(user_email).to eq 'mike@test.com'
+
     end
   end
 
