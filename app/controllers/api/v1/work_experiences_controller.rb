@@ -4,6 +4,11 @@ module Api::V1
     before_action :set_user
     before_action :set_work_experience, only: [:update, :destroy]
 
+    def index
+      @work_experiences = @user.work_experiences
+      render json: @work_experiences
+    end
+
     def create
       @work_experience = @user.work_experiences.build(work_experience_params)
 
