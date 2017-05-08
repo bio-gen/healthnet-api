@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :work_experience do
-    title 'Software Engineer'
-    company 'Google'
-    location 'USA'
+    title { Faker::Job.title }
+    company { Faker::Company.name }
+    location { Faker::Address.country }
     start_date { Faker::Date.backward(50) }
     end_date { Faker::Date.backward(10) }
     current false
