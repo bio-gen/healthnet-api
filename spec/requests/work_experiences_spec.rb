@@ -73,4 +73,16 @@ RSpec.describe 'Work Experiences', type: :request do
       expect(json_response[:data][:attributes][:location]).to eq('Japan')
     end
   end
+
+  describe 'DELETE /v1/users/:id/work_experiences/:id' do
+    let(:user) { FactoryGirl.create(:user_with_work_experiences, id: 1) }
+
+    before do
+      delete "/v1/users/1/work_experiences/#{user.work_experiences.first.id}", headers: { 'Accept': 'application/vnd' }
+    end
+
+    it 'deletes the requested work experience' do
+      expect(response).to have_http_status 204
+    end
+  end
 end
