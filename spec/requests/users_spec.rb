@@ -3,39 +3,39 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
 
   describe 'GET /v1/users' do
-    it 'returns all users' do
-      FactoryGirl.create(:user, email: 'john@test.com')
-      FactoryGirl.create(:user, email: 'mike@test.com')
+    let!(:users) { FactoryGirl.create_list(:user_with_work_experiences, 10) }
 
-      get '/v1/users', headers: { 'Accept': 'application/vnd' }
+    before { get '/v1/users', headers: { 'Accept': 'application/vnd' } }
 
+    it 'returns HTTP status 200' do
       expect(response).to have_http_status 200
+    end
 
-      body = JSON.parse(response.body)
-
-      user_emails = body['data'].map { |user| user['attributes']['email'] }
-
-      expect(user_emails).to match_array(['john@test.com', 'mike@test.com'])
+    it 'returns all users' do
+      expect(json_response[:data].size).to eq(10)
     end
   end
 
   describe 'GET /v1/users/:id' do
-    it 'returns the requested user' do
-      FactoryGirl.create(:user, email: 'james@text.com', id: 1)
+    let!(:user) { FactoryGirl.create(:user_with_work_experiences, email: 'james@text.com', id: 1) }
 
-      get '/v1/users/1', headers: { 'Accept': 'application/vnd' }
+    before { get '/v1/users/1', headers: { 'Accept': 'application/vnd' } }
 
+    it 'returns HTTP status 200' do
       expect(response).to have_http_status 200
+    end
 
-      body = JSON.parse(response.body)
-      user_email = body['data']['attributes']['email']
+    it 'returns the requested user' do
+      expect(json_response[:data][:attributes][:email]).to eq('james@text.com')
+    end
 
-      expect(user_email).to eq('james@text.com')
+    it 'returns work experiences' do
+      expect(json_response[:data][:relationships][:work_experiences][:data].size).to eq(5)
     end
   end
 
   describe 'POST /v1/users' do
-    it 'creates and returns the new user' do
+    before do
       new_user = {
         data: {
           type: 'users',
@@ -50,19 +50,19 @@ RSpec.describe 'Users', type: :request do
       }
 
       post '/v1/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+    end
 
+    it 'returns HTTP status 201' do
       expect(response).to have_http_status 201
+    end
 
-      body = JSON.parse(response.body)
-
-      user_email = body['data']['attributes']['email']
-      expect(user_email).to eq 'mike@test.com'
-
+    it 'creates and returns the new user' do
+      expect(json_response[:data][:attributes][:email]).to eq('mike@test.com')
     end
   end
 
   describe 'PUT/PATCH /v1/users/:id' do
-    it 'updates the requested user' do
+    before do
       FactoryGirl.create(:user, id: 1)
 
       updated_user = {
@@ -75,22 +75,24 @@ RSpec.describe 'Users', type: :request do
       }
 
       put '/v1/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+    end
 
+    it 'returns HTTP status 200' do
       expect(response).to have_http_status 200
+    end
 
-      body = JSON.parse(response.body)
-      user_email = body['data']['attributes']['email']
-
-      expect(user_email).to eq('sarah2@test.com')
+    it 'updates the requested user' do
+      expect(json_response[:data][:attributes][:email]).to eq('sarah2@test.com')
     end
   end
 
   describe 'DELETE /v1/users/:id' do
-    it 'deleted the requested user' do
+    before do
       FactoryGirl.create(:user, id: 1)
-
       delete '/v1/users/1', headers: { 'Accept': 'application/vnd' }
+    end
 
+    it 'deleted the requested user' do
       expect(response).to have_http_status 204
     end
   end

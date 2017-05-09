@@ -7,6 +7,8 @@ FactoryGirl.define do
     end_date { Faker::Date.backward(10) }
     current false
     description 'MyText'
-    user { create(:user) }
+
+    # Associations
+    user
   end
 end
