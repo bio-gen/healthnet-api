@@ -1,24 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe 'Authentications', type: :request do
-  describe 'POST /v1/auth' do
 
+  describe 'POST /v1/auth' do
     context 'valid request' do
       let(:user) { FactoryGirl.create(:user, email: 'test@test.com') }
 
-      it 'returns a valid JWT auth token' do
-        post '/v1/auth', params: { auth: {email: user.email, password: user.password} }, headers: {}
+      before { post '/v1/auth', params: { auth: {email: user.email, password: user.password} }, headers: {} }
 
+      it 'returns HTTP status 201' do
         expect(response).to have_http_status 201
+      end
 
-        auth_token = JSON.parse(response.body)['jwt']
+      it 'returns a valid JWT auth token' do
+        auth_token = json_response[:jwt]
       end
     end
 
     context 'invalid request' do
-      it 'returns 404 Not Found' do
-        post '/v1/auth/', params: { auth: {email: 'lala@msn.com', password: 'hello'} }, headers: {}
+      before { post '/v1/auth/', params: { auth: {email: 'lala@msn.com', password: 'hello'} }, headers: {} }
 
+      it 'returns 404 Not Found' do
         expect(response).to have_http_status 404
       end
     end
