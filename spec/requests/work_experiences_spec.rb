@@ -48,4 +48,29 @@ RSpec.describe 'Work Experiences', type: :request do
       expect(json_response[:data][:attributes][:company]).to eq('Apple')
     end
   end
+
+  describe 'PUT/PATCH /v1/users/:id/work_experiences/:id' do
+    let(:user) { FactoryGirl.create(:user_with_work_experiences, id: 1) }
+
+    before do
+      updated_work = {
+        data: {
+          type: 'work_experiences',
+          attributes: {
+            location: 'Japan'
+          }
+        }
+      }
+
+      put "/v1/users/1/work_experiences/#{user.work_experiences.first.id}", params: updated_work.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+    end
+
+    it 'returns HTTP status 200' do
+      expect(response).to have_http_status 200
+    end
+
+    it 'updates the requested work experience' do
+      expect(json_response[:data][:attributes][:location]).to eq('Japan')
+    end
+  end
 end
