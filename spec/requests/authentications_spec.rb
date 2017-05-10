@@ -13,7 +13,7 @@ RSpec.describe 'Authentications', type: :request do
       end
 
       it 'returns a valid JWT auth token' do
-        auth_token = json_response[:jwt]
+        expect(json_response[:jwt]).to eq(Knock::AuthToken.new(payload: {sub: user.id}).token)
       end
     end
 
