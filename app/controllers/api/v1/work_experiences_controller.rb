@@ -9,6 +9,7 @@ module Api::V1
       render json: @work_experiences
     end
 
+    # POST /users/:user_id/work_experiences
     def create
       @work_experience = @user.work_experiences.build(work_experience_params)
 

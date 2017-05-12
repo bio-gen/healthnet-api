@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, except: [:new, :edit] do
         resources :work_experiences, except: [:new, :edit]
+        resources :educations, except: [:new, :edit]
       end
 
       post 'auth' => 'user_token#create'

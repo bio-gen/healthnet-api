@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :work_experiences
+  has_many :work_experiences, dependent: :destroy
+  has_many :educations, dependent: :destroy
 
   validates :email, :presence => true, :uniqueness => true
   validates :first_name, :presence => true

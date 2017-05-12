@@ -16,5 +16,15 @@ FactoryGirl.define do
       end
     end
 
+    factory :user_with_educations do
+      transient do
+        educations_count 3
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:education, evaluator.educations_count, user: user)
+      end
+    end
+
   end
 end
