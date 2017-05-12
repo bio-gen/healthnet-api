@@ -4,6 +4,7 @@ module Api::V1
     before_action :set_user
     before_action :set_work_experience, only: [:update, :destroy]
 
+    # GET /users/:user_id/work_experiences
     def index
       @work_experiences = @user.work_experiences
       render json: @work_experiences
@@ -20,6 +21,7 @@ module Api::V1
       end
     end
 
+    # PUT/PATCH /users/:user_id/work_experiences/:id
     def update
       if @work_experience.update(work_experience_params)
         render json: @work_experience
@@ -28,6 +30,7 @@ module Api::V1
       end
     end
 
+    # DELETE /users/:user_id/work_experiences/:id
     def destroy
       @work_experience.destroy
     end
