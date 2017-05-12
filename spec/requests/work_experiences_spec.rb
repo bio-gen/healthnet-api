@@ -1,23 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Work Experiences', type: :request do
-  let(:user) { FactoryGirl.create(:user, id: 1) }
+  let(:user) { FactoryGirl.create(:user_with_work_experiences, id: 1) }
 
   describe 'GET /v1/users/:id/work_experiences' do
-    before do
-      FactoryGirl.create(:work_experience, company: 'Microsoft', user: user)
-      FactoryGirl.create(:work_experience, company: 'Airbnb', user: user)
-
-      get "/v1/users/#{user.id}/work_experiences", headers: { 'Accept': 'application/vnd' }
-    end
+    before { get "/v1/users/#{user.id}/work_experiences", headers: { 'Accept': 'application/vnd' } }
 
     it 'returns HTTP status 200' do
       expect(response).to have_http_status 200
     end
 
     it 'returns the user\'s work experiences' do
-      work_companies = json_response[:data].map { |work| work[:attributes][:company] }
-      expect(work_companies).to match_array(['Microsoft', 'Airbnb'])
+      expect(json_response[:data].size).to eq(5)
     end
   end
 
@@ -50,8 +44,6 @@ RSpec.describe 'Work Experiences', type: :request do
   end
 
   describe 'PUT/PATCH /v1/users/:id/work_experiences/:id' do
-    let(:user) { FactoryGirl.create(:user_with_work_experiences, id: 1) }
-
     before do
       updated_work = {
         data: {
@@ -75,11 +67,7 @@ RSpec.describe 'Work Experiences', type: :request do
   end
 
   describe 'DELETE /v1/users/:id/work_experiences/:id' do
-    let(:user) { FactoryGirl.create(:user_with_work_experiences, id: 1) }
-
-    before do
-      delete "/v1/users/1/work_experiences/#{user.work_experiences.first.id}", headers: { 'Accept': 'application/vnd' }
-    end
+    before { delete "/v1/users/1/work_experiences/#{user.work_experiences.first.id}", headers: { 'Accept': 'application/vnd' } }
 
     it 'deletes the requested work experience' do
       expect(response).to have_http_status 204
