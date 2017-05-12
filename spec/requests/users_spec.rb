@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
 
   describe 'GET /v1/users' do
-    let!(:users) { FactoryGirl.create_list(:user_with_work_experiences, 10) }
+    let!(:users) { FactoryGirl.create_list(:user, 10) }
 
     before { get '/v1/users', headers: { 'Accept': 'application/vnd' } }
 
@@ -17,9 +17,14 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'GET /v1/users/:id' do
-    let!(:user) { FactoryGirl.create(:user_with_work_experiences, email: 'james@text.com', id: 1) }
+    let!(:user) { FactoryGirl.create(:user, email: 'james@text.com', id: 1) }
 
-    before { get '/v1/users/1', headers: { 'Accept': 'application/vnd' } }
+    before do
+      FactoryGirl.create_list(:work_experience, 5, user: user)
+      FactoryGirl.create_list(:education, 3, user: user)
+
+      get '/v1/users/1', headers: { 'Accept': 'application/vnd' }
+    end
 
     it 'returns HTTP status 200' do
       expect(response).to have_http_status 200
@@ -31,6 +36,10 @@ RSpec.describe 'Users', type: :request do
 
     it 'returns work experiences' do
       expect(json_response[:data][:relationships][:work_experiences][:data].size).to eq(5)
+    end
+
+    it 'returns educations' do
+      expect(json_response[:data][:relationships][:educations][:data].size).to eq(3)
     end
   end
 
@@ -87,13 +96,12 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'DELETE /v1/users/:id' do
-    before do
-      FactoryGirl.create(:user, id: 1)
-      delete '/v1/users/1', headers: { 'Accept': 'application/vnd' }
-    end
+    let!(:user) { FactoryGirl.create(:user, id: 1) }
+    before { delete '/v1/users/1', headers: { 'Accept': 'application/vnd' } }
 
-    it 'deleted the requested user' do
+    it 'deletes the requested user' do
       expect(response).to have_http_status 204
     end
+
   end
 end
