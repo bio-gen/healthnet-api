@@ -10,7 +10,6 @@ RSpec.describe Education, type: :model do
     it { is_expected.to validate_presence_of :degree }
     it { is_expected.to validate_presence_of :field }
     it { is_expected.to validate_presence_of :description }
-    it { is_expected.to validate_presence_of :from_year }
-    it { is_expected.to validate_presence_of :to_year }
+    it { is_expected.to validate_presence_of :start_year }
   end
 end

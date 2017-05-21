@@ -3,8 +3,8 @@ FactoryGirl.define do
     title { Faker::Job.title }
     company { Faker::Company.name }
     location { Faker::Address.country }
-    start_date { Faker::Date.backward(50) }
-    end_date { Faker::Date.backward(10) }
+    start_year '1995'
+    end_year '2000'
     current false
     description 'MyText'
 

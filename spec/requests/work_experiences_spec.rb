@@ -24,7 +24,7 @@ RSpec.describe 'Work Experiences', type: :request do
             title: 'Software Engineer',
             company: 'Apple',
             location: 'USA',
-            start_date: '2017-05-08',
+            start_year: '2017-05-08',
             current: true,
             description: 'Lalalalalala'
           }

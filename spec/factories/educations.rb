@@ -4,8 +4,9 @@ FactoryGirl.define do
     degree { Faker::Educator.course }
     field 'Medicine'
     description 'MyText'
-    from_year '1990'
-    to_year '1998'
+    start_year '1990'
+    end_year '1998'
+    current false
 
     # Associations
     user

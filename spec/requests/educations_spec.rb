@@ -25,8 +25,8 @@ RSpec.describe 'Educations', type: :request do
             degree: 'Ing. Sistemas',
             field: 'Computer Science',
             description: 'Blah blah blah',
-            from_year: '2008',
-            to_year: '2013'
+            start_year: '2008',
+            end_year: '2013'
           }
         }
       }
