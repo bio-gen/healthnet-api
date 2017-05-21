@@ -45,7 +45,7 @@ module Api::V1
       end
 
       def education_params
-        params.require(:data).require(:attributes).permit(:school, :degree, :field, :description, :from_year, :to_year)
+        params.require(:data).require(:attributes).permit(:school, :degree, :field, :description, :start_year, :end_year, :current)
       end
 
   end

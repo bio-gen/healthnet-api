@@ -20,11 +20,12 @@ ActiveRecord::Schema.define(version: 20170512030122) do
     t.string   "degree"
     t.string   "field"
     t.text     "description"
-    t.string   "from_year"
-    t.string   "to_year"
+    t.string   "start_year"
+    t.string   "end_year"
+    t.boolean  "current",     default: false
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["user_id"], name: "index_educations_on_user_id", using: :btree
   end
 
@@ -43,8 +44,8 @@ ActiveRecord::Schema.define(version: 20170512030122) do
     t.string   "title"
     t.string   "company"
     t.string   "location"
-    t.date     "start_date"
-    t.date     "end_date"
+    t.string   "start_year"
+    t.string   "end_year"
     t.boolean  "current"
     t.text     "description"
     t.integer  "user_id"

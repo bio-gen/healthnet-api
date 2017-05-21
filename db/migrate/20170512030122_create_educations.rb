@@ -5,8 +5,9 @@ class CreateEducations < ActiveRecord::Migration[5.0]
       t.string :degree
       t.string :field
       t.text :description
-      t.string :from_year
-      t.string :to_year
+      t.string :start_year
+      t.string :end_year
+      t.boolean :current, default: :false
       t.references :user, foreign_key: true
 
       t.timestamps

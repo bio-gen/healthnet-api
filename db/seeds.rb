@@ -11,7 +11,17 @@ user.work_experiences.create(
   title: 'Software Engineer',
   company: 'Google',
   location: 'USA',
-  start_date: Date.today.to_s,
+  start_year: Date.today.year.to_s,
   current: true,
   description: 'Lalalala'
-)
+  )
+
+user.educations.create(
+  school: 'Harvard University',
+  degree: 'General Surgeon',
+  field: 'Medicine',
+  description: 'Lalala',
+  start_year: '1990',
+  end_year: '2000',
+  current: false
+  )

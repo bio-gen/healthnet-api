@@ -46,7 +46,7 @@ module Api::V1
       end
 
       def work_experience_params
-        params.require(:data).require(:attributes).permit(:title, :company, :location, :start_date, :end_date, :current, :description)
+        params.require(:data).require(:attributes).permit(:title, :company, :location, :start_year, :end_year, :current, :description)
       end
 
   end

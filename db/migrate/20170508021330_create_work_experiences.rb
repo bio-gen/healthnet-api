@@ -4,9 +4,9 @@ class CreateWorkExperiences < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :company
       t.string :location
-      t.date :start_date
-      t.date :end_date
-      t.boolean :current
+      t.string :start_year
+      t.string :end_year
+      t.boolean :current, defaukt: :false
       t.text :description
       t.references :user, foreign_key: true
 

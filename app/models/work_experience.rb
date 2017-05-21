@@ -4,6 +4,6 @@ class WorkExperience < ApplicationRecord
   validates :title, :presence => true
   validates :company, :presence => true
   validates :location, :presence => true
-  validates :start_date, :presence => true
+  validates :start_year, :presence => true
   validates :description, :presence => true
 end
