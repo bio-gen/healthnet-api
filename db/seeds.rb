@@ -4,7 +4,12 @@ user = User.create(
   password: '12345678',
   password_confirmation: '12345678',
   first_name: 'John',
-  last_name: 'Salchichon'
+  last_name: 'Salchichon',
+  title: 'Dr.',
+  location: 'Taiwan',
+  institution: 'McKay Hospital',
+  date_of_birth: Date.today.to_s,
+  phone_number: '094521209'
   )
 
 user.work_experiences.create(
