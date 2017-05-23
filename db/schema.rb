@@ -34,6 +34,11 @@ ActiveRecord::Schema.define(version: 20170512030122) do
     t.string   "password_digest"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "title"
+    t.string   "location"
+    t.string   "institution"
+    t.date     "date_of_birth"
+    t.string   "phone_number"
     t.string   "photo"
     t.string   "user_type"
     t.datetime "created_at",      null: false

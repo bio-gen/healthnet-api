@@ -5,6 +5,11 @@ FactoryGirl.define do
     password_confirmation '12345678'
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
+    title 'Dr.'
+    location 'Taiwan'
+    institution 'McKay Hospital'
+    date_of_birth { Date.today.to_s }
+    phone_number '094521209'
 
     factory :user_with_work_experiences do
       transient do
