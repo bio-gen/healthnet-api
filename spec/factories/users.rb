@@ -31,5 +31,15 @@ FactoryGirl.define do
       end
     end
 
+    factory :user_with_certificates do
+      transient do
+        certificates_count 2
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:certificate, evaluator.certificates_count, user: user)
+      end
+    end
+
   end
 end

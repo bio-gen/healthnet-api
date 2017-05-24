@@ -3,5 +3,5 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :work_experiences
   has_many :educations
-
+  has_many :certificates
 end
