@@ -30,3 +30,9 @@ user.educations.create(
   end_year: '2000',
   current: false
   )
+
+user.certificates.create(
+  title: 'Limb preservation and salvage',
+  granted_by: 'The American Board of Multiple Specialties in Podiatry',
+  year: '2010'
+  )
