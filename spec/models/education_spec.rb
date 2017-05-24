@@ -12,4 +12,8 @@ RSpec.describe Education, type: :model do
     it { is_expected.to validate_presence_of :description }
     it { is_expected.to validate_presence_of :start_year }
   end
+
+  context 'associations' do
+    it { is_expected.to(belong_to(:user)) }
+  end
 end
