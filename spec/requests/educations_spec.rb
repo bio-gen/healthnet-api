@@ -61,7 +61,7 @@ RSpec.describe 'Educations', type: :request do
       expect(response).to have_http_status 200
     end
 
-    it 'updated the requested education' do
+    it 'updates the requested education' do
       expect(json_response[:data][:attributes][:school]).to eq('UNAH')
     end
   end
