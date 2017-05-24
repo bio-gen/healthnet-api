@@ -1,5 +1,6 @@
 module Api::V1
   class EducationsController < ApplicationController
+
     before_action :set_user
     before_action :set_education, only: [:update, :destroy]
 
