@@ -45,7 +45,8 @@ module Api::V1
       end
 
       def user_params
-        params.require(:data).require(:attributes).permit(:email, :password, :password_confirmation, :first_name, :last_name)
+        params.require(:data).require(:attributes).permit(:email, :password, :password_confirmation, :first_name,
+            :last_name, :title, :location, :institution, :date_of_birth, :phone_number)
       end
   end
 end
