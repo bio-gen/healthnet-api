@@ -16,53 +16,108 @@ RSpec.describe 'Educations', type: :request do
   end
 
   describe 'POST /v1/users/:user_id/educations' do
-    before do
-      new_education = {
-        data: {
-          type: 'educations',
-          attributes: {
-            school: 'UNITEC',
-            degree: 'Ing. Sistemas',
-            field: 'Computer Science',
-            description: 'Blah blah blah',
-            start_year: '2008',
-            end_year: '2013'
+    context 'when request is valid' do
+      before do
+        new_education = {
+          data: {
+            type: 'educations',
+            attributes: {
+              school: 'UNITEC',
+              degree: 'Ing. Sistemas',
+              field: 'Computer Science',
+              description: 'Blah blah blah',
+              start_year: '2008',
+              end_year: '2013'
+            }
           }
         }
-      }
-
-      post "/v1/users/#{user.id}/educations", params: new_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+  
+        post "/v1/users/#{user.id}/educations", params: new_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status code 201' do
+        expect(response).to have_http_status 201
+      end
+  
+      it 'creates and returns the new education item' do
+        expect(json_response[:data][:attributes][:school]).to eq('UNITEC')
+      end
     end
-
-    it 'returns HTTP status code 201' do
-      expect(response).to have_http_status 201
-    end
-
-    it 'creates and returns the new education item' do
-      expect(json_response[:data][:attributes][:school]).to eq('UNITEC')
+    
+    context 'when request is invalid' do
+      before do
+        new_education = {
+          data: {
+            type: 'educations',
+            attributes: {
+              school: '',
+              degree: 'Ing. Sistemas',
+              field: 'Computer Science',
+              description: 'Blah blah blah',
+              start_year: '2008',
+              end_year: '2013'
+            }
+          }
+        }
+  
+        post "/v1/users/#{user.id}/educations", params: new_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status code 422' do
+        expect(response).to have_http_status 422
+      end
+  
+      it 'returns a JSON API error object' do
+        expect(json_response[:errors][0][:source][:pointer]).to eq('/data/attributes/school')
+      end      
     end
   end
 
   describe 'PUT/PATCH /v1/users/:user_id/educations/:id' do
-    before do
-      updated_education = {
-        data: {
-          type: 'educations',
-          attributes: {
-            school: 'UNAH'
+    context 'when request is valid' do
+      before do
+        updated_education = {
+          data: {
+            type: 'educations',
+            attributes: {
+              school: 'UNAH'
+            }
           }
         }
-      }
-
-      put "/v1/users/#{user.id}/educations/#{user.educations.first.id}", params: updated_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+  
+        put "/v1/users/#{user.id}/educations/#{user.educations.first.id}", params: updated_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status 200' do
+        expect(response).to have_http_status 200
+      end
+  
+      it 'updates the requested education' do
+        expect(json_response[:data][:attributes][:school]).to eq('UNAH')
+      end
     end
-
-    it 'returns HTTP status 200' do
-      expect(response).to have_http_status 200
-    end
-
-    it 'updates the requested education' do
-      expect(json_response[:data][:attributes][:school]).to eq('UNAH')
+    
+    context 'when request is invalid' do
+      before do
+        updated_education = {
+          data: {
+            type: 'educations',
+            attributes: {
+              school: ''
+            }
+          }
+        }
+  
+        put "/v1/users/#{user.id}/educations/#{user.educations.first.id}", params: updated_education.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status 422' do
+        expect(response).to have_http_status 422
+      end
+  
+      it 'returns a JSON API error object' do
+        expect(json_response[:errors][0][:source][:pointer]).to eq('/data/attributes/school')
+      end      
     end
   end
 

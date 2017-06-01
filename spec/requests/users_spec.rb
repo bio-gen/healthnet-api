@@ -44,54 +44,110 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'POST /v1/users' do
-    before do
-      new_user = {
-        data: {
-          type: 'users',
-          attributes: {
-            email: 'mike@test.com',
-            password: '12345678',
-            password_confirmation: '12345678',
-            first_name: 'Doctor',
-            last_name: 'Mengueche'
+    context 'when response is valid' do
+      before do
+        new_user = {
+          data: {
+            type: 'users',
+            attributes: {
+              email: 'mike@test.com',
+              password: '12345678',
+              password_confirmation: '12345678',
+              first_name: 'Doctor',
+              last_name: 'Mengueche'
+            }
           }
         }
-      }
-
-      post '/v1/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+  
+        post '/v1/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status 201' do
+        expect(response).to have_http_status 201
+      end
+  
+      it 'creates and returns the new user' do
+        expect(json_response[:data][:attributes][:email]).to eq('mike@test.com')
+      end
     end
-
-    it 'returns HTTP status 201' do
-      expect(response).to have_http_status 201
-    end
-
-    it 'creates and returns the new user' do
-      expect(json_response[:data][:attributes][:email]).to eq('mike@test.com')
+    
+    context 'when response is invalid' do
+      before do
+        new_user = {
+          data: {
+            type: 'users',
+            attributes: {
+              email: '',
+              password: '12345678',
+              password_confirmation: '12345678',
+              first_name: 'John',
+              last_name: 'Doe'
+            }
+          }
+        }
+  
+        post '/v1/users', params: new_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+      
+      it 'returns HTTP status 422' do
+        expect(response).to have_http_status 422
+      end
+      
+      it 'returns JSON API error object' do
+        expect(json_response[:errors][0][:source][:pointer]).to eq('/data/attributes/email')
+      end
     end
   end
 
   describe 'PUT/PATCH /v1/users/:id' do
-    before do
-      FactoryGirl.create(:user, id: 1)
-
-      updated_user = {
-        data: {
-          type: 'users',
-          attributes: {
-            email: 'sarah2@test.com'
+    context 'when response is valid' do
+      before do
+        FactoryGirl.create(:user, id: 1)
+  
+        updated_user = {
+          data: {
+            type: 'users',
+            attributes: {
+              email: 'sarah2@test.com'
+            }
           }
         }
-      }
-
-      put '/v1/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+  
+        put '/v1/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+  
+      it 'returns HTTP status 200' do
+        expect(response).to have_http_status 200
+      end
+  
+      it 'updates the requested user' do
+        expect(json_response[:data][:attributes][:email]).to eq('sarah2@test.com')
+      end
     end
-
-    it 'returns HTTP status 200' do
-      expect(response).to have_http_status 200
-    end
-
-    it 'updates the requested user' do
-      expect(json_response[:data][:attributes][:email]).to eq('sarah2@test.com')
+    
+    context 'when response is invalid' do
+      before do
+        FactoryGirl.create(:user, id: 1)
+        
+        updated_user = {
+          data: {
+            type: 'users',
+            attributes: {
+              first_name: ''
+            }
+          }
+        }
+        
+        put '/v1/users/1', params: updated_user.to_json, headers: { 'Accept': 'application/vnd', 'Content-Type': 'application/vnd.api+json' }
+      end
+      
+      it 'returns HTTP status 422' do
+        expect(response).to have_http_status 422
+      end
+      
+      it 'returns JSON API error object' do
+        expect(json_response[:errors][0][:source][:pointer]).to eq('/data/attributes/first_name')
+      end
     end
   end
 
