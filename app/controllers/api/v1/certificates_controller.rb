@@ -1,6 +1,6 @@
 module Api::V1
   class CertificatesController < ApplicationController
-
+    
     before_action :set_user
     before_action :set_certificate, only: [:update, :destroy]
 
@@ -17,7 +17,7 @@ module Api::V1
       if @certificate.save
         render json: @certificate, status: :created
       else
-        render json: @certificate.errors, status: :unprocessable_entity
+        render json: @certificate, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 
@@ -26,7 +26,7 @@ module Api::V1
       if @certificate.update(certificate_params)
         render json: @certificate
       else
-        render json: @certificate.errors, status: :unprocessable_enttiy
+        render json: @certificate, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 

@@ -17,7 +17,7 @@ module Api::V1
       if @education.save
         render json: @education, status: :created
       else
-        render json: @education.errors, status: :unprocessable_entity
+        render json: @education, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 
@@ -26,7 +26,7 @@ module Api::V1
       if @education.update(education_params)
         render json: @education
       else
-        render json: @education.errors, status: :unprocessable_entity
+        render json: @education, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 

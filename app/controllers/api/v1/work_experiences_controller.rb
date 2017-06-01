@@ -17,7 +17,7 @@ module Api::V1
       if @work_experience.save
         render json: @work_experience, status: :created
       else
-        render json: @work_experience.errors, status: :unprocessable_entity
+        render json: @work_experience, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 
@@ -26,7 +26,7 @@ module Api::V1
       if @work_experience.update(work_experience_params)
         render json: @work_experience
       else
-        render json: @work_experience.errors, status: :unprocessable_entity
+        render json: @work_experience, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 

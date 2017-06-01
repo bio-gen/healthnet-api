@@ -20,7 +20,7 @@ module Api::V1
       if @user.save
         render json: @user, status: :created
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: @user, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 
@@ -29,7 +29,7 @@ module Api::V1
       if @user.update(user_params)
         render json: @user
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: @user, status: :unprocessable_entity, serializer: ActiveModel::Serializer::ErrorSerializer
       end
     end
 
